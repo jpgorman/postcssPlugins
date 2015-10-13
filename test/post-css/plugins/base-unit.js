@@ -34,10 +34,15 @@ describe('Base Unit plugin', () => {
 
     it('should match integers and floating points with pull()', () => {
 
-      const fixture = 'h1{margin: pull(1)}';
-      const expected = 'h1{margin: -8px}';
+      const fixtureA = 'h1{margin: pull(1)}';
+      const expectedA = 'h1{margin: -8px}';
 
-      expect(process(fixture, options)).to.eql(expected);
+      expect(process(fixtureA, options)).to.eql(expectedA);
+
+      const fixtureB = 'h1{margin: pull(1.1)}';
+      const expectedB = 'h1{margin: -8.8px}';
+
+      expect(process(fixtureB, options)).to.eql(expectedB);
     });
 
     it('should support shorthand css notation', () => {
