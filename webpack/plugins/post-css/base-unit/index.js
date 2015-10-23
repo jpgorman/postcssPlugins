@@ -54,6 +54,8 @@ const testValue = R.curry((options, value) => {
   if (valueTest.test(value)) {
     return extractValue(value, options);
   }
+
+  return value;
 });
 
 module.exports = postcss.plugin('postcss-base-units', (options) => {
@@ -61,11 +63,11 @@ module.exports = postcss.plugin('postcss-base-units', (options) => {
 
   return (css, result) => {
     css.eachDecl(function(decl) {
-
       decl.value = R.compose(
           R.join(' '),
-          R.map(testValue(opts))
-        )(R.split(/\s+/, decl.value));
+          R.map(testValue(opts)),
+          R.split(/\s+/)
+        )(decl.value);
 
     });
   };

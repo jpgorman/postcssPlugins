@@ -19,6 +19,7 @@ describe('Base Unit plugin', () => {
   });
 
   describe('matching algorithm', () => {
+
     it('should match integers and floating points with push()', () => {
 
       const fixtureA = 'h1{margin: push(1)}';
@@ -61,6 +62,18 @@ describe('Base Unit plugin', () => {
       const expectedC = 'h1{margin: 8px 16px 4px 8px}';
 
       expect(process(fixtureC, options)).to.eql(expectedC);
+    });
+
+    it('should not affect other css properties', () => {
+      const fixtureA = 'h1{margin: push(1);color:red;}';
+      const expectedA = 'h1{margin: 8px;color:red;}';
+
+      expect(process(fixtureA, options)).to.eql(expectedA);
+
+      const fixtureB = 'h1{margin: push(1) push(2) 9px;color:red;}';
+      const expectedB = 'h1{margin: 8px 16px 9px;color:red;}';
+
+      expect(process(fixtureB, options)).to.eql(expectedB);
     });
 
   });
